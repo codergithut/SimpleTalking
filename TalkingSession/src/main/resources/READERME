@@ -1,0 +1,3 @@
+用户聊天会话管理,主要是用户登录生成sessionId 和用户id和队列的topic的关系redis缓存管理 维护用户登录信息,用户和kafka队列信息 redis服务 提供TalkingSocket发送路由
+
+
