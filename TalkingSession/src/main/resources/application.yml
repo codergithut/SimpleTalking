@@ -17,6 +17,23 @@ spring:
         min-idle: 0
     #连接超时时间
     timeout: 10000
+    #邮箱配置
+
+  mail:
+    host: smtp.qq.com
+    username: 917484312@qq.com
+    #QQ邮箱的授权码
+    password: 自己申请
+    default-encoding: UTF-8
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
 
 oauth2:
   secret: test
+
+
