@@ -2,7 +2,13 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/SimpleTalking.iml" filepath="$PROJECT_DIR$/.idea/SimpleTalking.iml" />
       <module fileurl="file://$PROJECT_DIR$/SimpleTalking.iml" filepath="$PROJECT_DIR$/SimpleTalking.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TalkingLogging/TalkingLogging.iml" filepath="$PROJECT_DIR$/TalkingLogging/TalkingLogging.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TalkingSession/TalkingSession.iml" filepath="$PROJECT_DIR$/TalkingSession/TalkingSession.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TalkingSocket/TalkingSocket.iml" filepath="$PROJECT_DIR$/TalkingSocket/TalkingSocket.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TalkingUser/TalkingUser.iml" filepath="$PROJECT_DIR$/TalkingUser/TalkingUser.iml" />
+      <module fileurl="file://$PROJECT_DIR$/common/common.iml" filepath="$PROJECT_DIR$/common/common.iml" />
     </modules>
   </component>
 </project>

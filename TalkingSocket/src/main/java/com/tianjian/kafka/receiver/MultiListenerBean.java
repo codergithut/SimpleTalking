@@ -23,7 +23,7 @@ import java.util.Optional;
  * @UpdateRemark: tianjian
  * @Version: v1.0
  */
-@KafkaListener(topics = {"#{commonConfig.topic}"})
+//@KafkaListener(topics = {"#{commonConfig.topic}"})
 @Component
 class MultiListenerBean {
 

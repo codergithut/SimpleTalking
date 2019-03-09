@@ -6,11 +6,30 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="SimpleTalking" />
+        <module name="common" />
+        <module name="TalkingLogging" />
+        <module name="TalkingSession" />
+        <module name="TalkingSocket" />
+        <module name="TalkingUser" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="common" target="1.8" />
       <module name="SimpleTalking" target="1.8" />
+      <module name="TalkingLogging" target="1.8" />
+      <module name="TalkingSession" target="1.8" />
+      <module name="TalkingSocket" target="1.8" />
+      <module name="TalkingUser" target="1.8" />
     </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="SimpleTalking" options="-parameters" />
+      <module name="TalkingLogging" options="-parameters" />
+      <module name="TalkingSession" options="-parameters" />
+      <module name="TalkingSocket" options="-parameters" />
+      <module name="TalkingUser" options="-parameters" />
+      <module name="common" options="-parameters" />
+    </option>
   </component>
 </project>
