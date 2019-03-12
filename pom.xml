@@ -14,6 +14,7 @@
         <module>TalkingUser</module>
         <module>TalkingSocket</module>
         <module>common</module>
+        <module>TalingData</module>
     </modules>
 
     <parent>

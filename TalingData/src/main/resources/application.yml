@@ -1,0 +1,9 @@
+server:
+  port: 12012
+
+spring:
+  data:
+    neo4j:
+      username: neo4j
+      password: tianjian
+      uri: bolt://127.0.0.1:7687

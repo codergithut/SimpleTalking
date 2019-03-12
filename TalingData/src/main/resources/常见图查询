@@ -1,0 +1,14 @@
+
+match( p1: user {userName:"tj"} )-[rel:FRIENDS]->(p2) return p2 //查询用户名为tj的好友
+
+
+MATCH (p:user)-[r:GROUP]->(g:group{groupName:"游戏工作群"}) RETURN p LIMIT 25 //查询某个群用户信息
+
+//删除节点信息需要先删除关系信息
+MATCH (p:user)-[r:GROUP]->(g:group{groupName:"游戏工作群"}) delete r //删除和游戏工作群有联系的关系
+MATCH (p:user)-[r:GROUP]->(g:group{groupName:"游戏工作群"}) delete p,g //删除节点信息
+
+
+
+//neo4j查询语法
+https://neo4j.com/docs/getting-started/3.5/cypher-intro/patterns/#cypher-intro-patterns-node-syntax
