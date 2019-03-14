@@ -27,6 +27,13 @@ public class TalkingGroup {
     @Property(name = "tag")
     private String tag;
 
+    @Property(name = "createId")
+    private String createId;
+
+    @Property(name = "masters")
+    private String masters;
+
+
     /**
      * groupid 数据库中
      */
@@ -35,6 +42,9 @@ public class TalkingGroup {
 
     @Property(name = "description")
     private String description;
+
+    @Property(name = "active")
+    private String active;
 
     public Long getId() {
         return id;
@@ -74,5 +84,29 @@ public class TalkingGroup {
 
     public void setGroupId(String groupId) {
         this.groupId = groupId;
+    }
+
+    public String getCreateId() {
+        return createId;
+    }
+
+    public void setCreateId(String createId) {
+        this.createId = createId;
+    }
+
+    public String getMasters() {
+        return masters;
+    }
+
+    public void setMasters(String masters) {
+        this.masters = masters;
+    }
+
+    public String getActive() {
+        return active;
+    }
+
+    public void setActive(String active) {
+        this.active = active;
     }
 }

@@ -1,14 +1,14 @@
-package com.tianjian.data.model.rest;
+package com.tianjian.data.rest;
 
+import com.tianjian.data.model.entity.relation.FriendRelation;
+import com.tianjian.data.model.entity.relation.GroupRelation;
+import com.tianjian.data.model.entity.relation.TalkingGroup;
 import com.tianjian.data.model.entity.relation.TalkingUser;
 import com.tianjian.data.model.entity.test.ActedIn;
 import com.tianjian.data.model.entity.test.Directed;
 import com.tianjian.data.model.entity.test.Movie;
 import com.tianjian.data.model.entity.test.Person;
-import com.tianjian.data.model.rep.FriendRelationRepository;
-import com.tianjian.data.model.rep.GroupRelationRepository;
-import com.tianjian.data.model.rep.TalkingGroupRepository;
-import com.tianjian.data.model.rep.TalkingUserRepository;
+import com.tianjian.data.model.rep.*;
 import com.tianjian.data.model.rep.test.ActedInRepository;
 import com.tianjian.data.model.rep.test.DirectedRepository;
 import com.tianjian.data.model.rep.test.MovieRepository;
@@ -90,52 +90,61 @@ public class Neo4jRestService {
     @Autowired
     GroupRelationRepository groupRelationRepository;
 
+    @Autowired
+    CommonRepository commonRepository;
+
     @GetMapping("/init")
     public void insertTalkingObject() {
-//        TalkingUser person1 = new TalkingUser();
-//        person1.setTag("person");
-//        person1.setUserName("tj");
-//        person1 = talkingUserRepository.save(person1);
-//        TalkingUser person2 = new TalkingUser();
-//        person2.setUserName("cl");
-//        person2.setTag("person");
-//        person2 = talkingUserRepository.save(person2);
-//
-//        TalkingGroup talkingGroup = new TalkingGroup();
-//        talkingGroup.setGroupName("游戏工作群");
-//        talkingGroup.setDescription("game players");
-//        talkingGroup.setTag("测试");
-//
-//        FriendRelation friendRelation = new FriendRelation();
-//        friendRelation.setFrom(person1);
-//        friendRelation.setTo(person2);
-//        friendRelationRepository.save(friendRelation);
-//
-//        FriendRelation friendRelation1 = new FriendRelation();
-//        friendRelation1.setFrom(person2);
-//        friendRelation1.setTo(person1);
-//        friendRelationRepository.save(friendRelation1);
-//
-//        GroupRelation groupRelation = new GroupRelation();
-//        groupRelation.setTalkingUser(person1);
-//        groupRelation.setTalkingGroup(talkingGroup);
-//        groupRelationRepository.save(groupRelation);
-//
-//        GroupRelation groupRelation1 = new GroupRelation();
-//        groupRelation1.setTalkingUser(person2);
-//        groupRelation1.setTalkingGroup(talkingGroup);
-//        groupRelationRepository.save(groupRelation1);
-//
+        TalkingUser person1 = new TalkingUser();
+        person1.setTag("person");
+        person1.setUserName("tj");
+        person1 = talkingUserRepository.save(person1);
+        TalkingUser person2 = new TalkingUser();
+        person2.setUserName("cl");
+        person2.setTag("person");
+        person2 = talkingUserRepository.save(person2);
+
+        TalkingGroup talkingGroup = new TalkingGroup();
+        talkingGroup.setGroupName("游戏工作群");
+        talkingGroup.setDescription("game players");
+        talkingGroup.setTag("测试");
+
+        FriendRelation friendRelation = new FriendRelation();
+        friendRelation.setFrom(person1);
+        friendRelation.setTo(person2);
+        friendRelationRepository.save(friendRelation);
+
+        FriendRelation friendRelation1 = new FriendRelation();
+        friendRelation1.setFrom(person2);
+        friendRelation1.setTo(person1);
+        friendRelationRepository.save(friendRelation1);
+
+        GroupRelation groupRelation = new GroupRelation();
+        groupRelation.setTalkingUser(person1);
+        groupRelation.setTalkingGroup(talkingGroup);
+        groupRelationRepository.save(groupRelation);
+
+        GroupRelation groupRelation1 = new GroupRelation();
+        groupRelation1.setTalkingUser(person2);
+        groupRelation1.setTalkingGroup(talkingGroup);
+        groupRelationRepository.save(groupRelation1);
+
 //        List<TalkingUser> data = talkingUserRepository.getTalkingUserFriend("tj");
+
+//        commonRepository.findAllEntity();
 //
-//        System.out.println("=====================" + data.get(0).getUserName() + "============================");
+//        commonRepository.findAllRelation();
+//
+//        commonRepository.deleteAllRealtion();
+//
+//        commonRepository.deleteAllEntity();
 
-        List<TalkingUser> datas = talkingUserRepository.getTalkingUserByGroup("游戏工作群");
+//        List<TalkingUser> datas = talkingUserRepository.getTalkingUserByGroup("游戏工作群");
 
-        System.out.println("======================begin===========================");
-        for(TalkingUser user : datas ) {
-            System.out.println("=====================" + user.getUserName() + "========================");
-        }
+//        System.out.println("======================begin===========================");
+//        for(TalkingUser user : datas ) {
+//            System.out.println("=====================" + user.getUserName() + "========================");
+//        }
 
     }
 

@@ -1,10 +1,8 @@
 package com.tianjian.data.model.rep;
 
 import com.tianjian.data.model.entity.relation.TalkingUser;
-import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
 
-import java.util.List;
 
 /**
  * @ProjectName: com.tianjian.data.model.rep
@@ -18,11 +16,9 @@ import java.util.List;
  */
 public interface TalkingUserRepository extends Neo4jRepository<TalkingUser, Long> {
 
-    @Query("match( p1: user {userName:{0}} )-[rel:FRIENDS]->(p2) return p2")
-    List<TalkingUser> getTalkingUserFriend(String userName);
+    TalkingUser findByUserId(String userId);
 
-    @Query("MATCH (p:user)-[r:GROUP]->(g:group{groupName:{0}}) RETURN p ")
-    List<TalkingUser> getTalkingUserByGroup(String groupName);
+    void deleteByUserId(String userId);
 
-
+    boolean existsByUserId(String userId);
 }

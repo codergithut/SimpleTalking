@@ -48,4 +48,11 @@ public class FriendRelation {
     public void setTo(TalkingUser to) {
         this.to = to;
     }
+
+    public boolean isValid() {
+        if(from != null & to != null) {
+            return true;
+        }
+        return false;
+    }
 }

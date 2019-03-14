@@ -14,4 +14,5 @@ import org.springframework.data.neo4j.repository.Neo4jRepository;
  * @Version: [v1.0]
  */
 public interface TalkingGroupRepository extends Neo4jRepository<TalkingGroup, Long> {
+    void deleteByTag(String tag);
 }

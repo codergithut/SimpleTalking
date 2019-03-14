@@ -1,6 +1,7 @@
 package com.tianjian.data.model.rep;
 
 import com.tianjian.data.model.entity.relation.FriendRelation;
+import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
 
 /**
@@ -14,4 +15,9 @@ import org.springframework.data.neo4j.repository.Neo4jRepository;
  * @Version: [v1.0]
  */
 public interface FriendRelationRepository extends Neo4jRepository<FriendRelation, Long> {
+    @Query("MATCH (p:user{userName:{0}})-[r:FRIENDS]->(t:user{userName:{1}}) RETURN r")
+    FriendRelation getFriendRelationByUserInfo(String from, String to);
+
+    @Query("MATCH (p:user{userName:{0}})-[r:FRIENDS]->(t:user{userName:{1}}) DELETE r")
+    void deleteFriendRelationByUserInfo(String from, String to);
 }
