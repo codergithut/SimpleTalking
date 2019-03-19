@@ -1,5 +1,8 @@
 package com.tianjian.data.model.entity.talk;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Date;
 
 /**
@@ -12,7 +15,14 @@ import java.util.Date;
  * @UpdateRemark: 跟新说明
  * @Version: [v1.0]
  */
+@Entity
+@Table(name = "talking")
 public class TalkingContent {
+
+    @Id
+    private String id;
+
+    private String sign;
 
     private String fromId;
 
@@ -21,6 +31,22 @@ public class TalkingContent {
     private String content;
 
     private String type;
+
+    public String getId() {
+        return id;
+    }
+
+    public String getSign() {
+        return sign;
+    }
+
+    public void setSign(String sign) {
+        this.sign = sign;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     private Date createDate;
 
