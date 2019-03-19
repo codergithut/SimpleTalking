@@ -1,4 +1,4 @@
-package com.tianjian.data.model.entity.talk;
+package com.tianjian.data.model.entity.user;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -32,6 +32,9 @@ public class TalkingContent {
 
     private String type;
 
+    private Date createDate;
+
+
     public String getId() {
         return id;
     }
@@ -48,7 +51,6 @@ public class TalkingContent {
         this.id = id;
     }
 
-    private Date createDate;
 
     public String getFromId() {
         return fromId;
@@ -89,4 +91,5 @@ public class TalkingContent {
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
+
 }

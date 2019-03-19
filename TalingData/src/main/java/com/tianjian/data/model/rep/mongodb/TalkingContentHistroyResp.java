@@ -35,22 +35,15 @@ public class TalkingContentHistroyResp {
     }
 
     /**
-     * 获取所有用户聊天数据
-     * @return
-     */
-    public List<TalkingContentHistory> getMogoPerson() {
-        return mongoTemplate.findAll(TalkingContentHistory.class, "talkingContentHistory");
-    }
-
-    /**
      * 根据时间查找用户聊天记录
      * @param key 用户key 通过正则匹配
      * @param time 用户查询时间
      * @return
      */
-    public List<TalkingContentHistory> getMogoHistoryByKey(String key, Date time) {
+    public List<TalkingContentHistory> getMogoHistoryByKey(String key, Date startTime, Date endTime) {
         Query query = new Query();
-        query.addCriteria(Criteria.where("history").lt(time));
+        query.addCriteria(Criteria.where("history").gt(startTime));
+        query.addCriteria(Criteria.where("history").lt(endTime));
         query.addCriteria(Criteria.where("sign").regex(key));
         return mongoTemplate.find(query, TalkingContentHistory.class, "talkingContentHistory");
     }

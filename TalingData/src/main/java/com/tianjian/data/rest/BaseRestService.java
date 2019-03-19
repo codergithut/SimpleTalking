@@ -2,10 +2,10 @@ package com.tianjian.data.rest;
 
 import com.common.util.StringSortUtil;
 import com.tianjian.data.model.entity.log.TalkingContentHistory;
-import com.tianjian.data.model.entity.talk.TalkingContent;
+import com.tianjian.data.model.entity.user.TalkingContent;
+import com.tianjian.data.model.entity.user.TalkingContentJpaRepository;
 import com.tianjian.data.model.entity.user.UserInfo;
 import com.tianjian.data.model.entity.user.UserJpaRepository;
-import com.tianjian.data.model.rep.mongodb.TalkingContentHistroyResp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,10 +30,11 @@ public class BaseRestService {
     @Autowired
     private UserJpaRepository userJpaRepository;
 
-    @GetMapping("/saveUser")
-    public UserInfo getMogoDbInfo() {
-        TalkingContentHistory talkingContentHistory = new TalkingContentHistory();
+    @Autowired
+    private TalkingContentJpaRepository talkingContentJpaRepository;
 
+    @GetMapping("/saveUser")
+    public List<TalkingContent> getMogoDbInfo() {
         UserInfo userInfo = new UserInfo();
         userInfo.setBakInfo("ahah");
         userInfo.setEmail("ssd");
@@ -42,8 +43,20 @@ public class BaseRestService {
         userInfo.setId(UUID.randomUUID().toString());
         userInfo.setSign("sign");
         userJpaRepository.save(userInfo);
-
-        return userJpaRepository.save(userInfo);
+        TalkingContent talkingContent = new TalkingContent();
+        talkingContent.setContent("我是测试数据");
+        talkingContent.setCreateDate(new Date());
+        String fromId = UUID.randomUUID().toString();
+        String toId = UUID.randomUUID().toString();
+        talkingContent.setFromId(fromId);
+        talkingContent.setToId(toId);
+        String[] keys = new String[]{fromId, toId};
+        String key = StringSortUtil.getKeyByKeys(keys);
+        talkingContent.setSign(key);
+        talkingContent.setId(UUID.randomUUID().toString());
+        talkingContentJpaRepository.save(talkingContent);
+        List<TalkingContent> datas = talkingContentJpaRepository.findBySignAndCreateDateBetween(key, new Date(0L), new Date());
+        return datas;
     }
 
 }

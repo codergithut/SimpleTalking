@@ -10,7 +10,6 @@ import com.tianjian.data.model.rep.neo4j.TalkingGroupRepository;
 import com.tianjian.data.model.rep.neo4j.TalkingUserRepository;
 import com.tianjian.data.model.service.FriendRelationServiceModel;
 import com.tianjian.data.model.service.GroupInfo;
-import com.tianjian.data.model.service.UserInfo;
 import com.tianjian.data.service.UserManager;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,10 +44,10 @@ public class UserManagerImpl implements UserManager {
     GroupRelationRepository groupRelationRepository;
 
     @Override
-    public boolean addTalkingUser(UserInfo userInfo) {
-        boolean existUser = talkingUserRepository.existsByUserId(userInfo.getUserId());
+    public boolean addTalkingUser(TalkingUser userEntity) {
+        boolean existUser = talkingUserRepository.existsByUserId(userEntity.getUserId());
         TalkingUser talkingUser = new TalkingUser();
-        BeanUtils.copyProperties(userInfo, talkingUser);
+        BeanUtils.copyProperties(userEntity, talkingUser);
         if(!existUser) {
             talkingUserRepository.save(talkingUser);
             return true;

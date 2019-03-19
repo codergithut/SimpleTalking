@@ -1,6 +1,6 @@
 package com.tianjian.data.model.entity.log;
 
-import com.tianjian.data.model.entity.talk.TalkingContent;
+import com.tianjian.data.model.entity.user.TalkingContent;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 

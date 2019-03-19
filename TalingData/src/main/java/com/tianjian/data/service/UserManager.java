@@ -1,8 +1,8 @@
 package com.tianjian.data.service;
 
+import com.tianjian.data.model.entity.relation.TalkingUser;
 import com.tianjian.data.model.service.FriendRelationServiceModel;
 import com.tianjian.data.model.service.GroupInfo;
-import com.tianjian.data.model.service.UserInfo;
 
 /**
  * @ProjectName: com.tianjian.data.service
@@ -18,10 +18,10 @@ public interface UserManager {
 
     /**
      * 添加用户节点
-     * @param userInfo 请求用户信息
+     * @param userEntity 请求用户信息
      * @return
      */
-    boolean addTalkingUser(UserInfo userInfo);
+    boolean addTalkingUser(TalkingUser userEntity);
 
     /**
      * 删除用户节点

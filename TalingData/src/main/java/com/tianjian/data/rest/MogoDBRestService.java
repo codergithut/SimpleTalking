@@ -1,11 +1,9 @@
 package com.tianjian.data.rest;
 
 import com.common.util.StringSortUtil;
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader;
 import com.tianjian.data.model.entity.log.TalkingContentHistory;
-import com.tianjian.data.model.entity.talk.TalkingContent;
+import com.tianjian.data.model.entity.user.TalkingContent;
 import com.tianjian.data.model.rep.mongodb.TalkingContentHistroyResp;
-import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,12 +44,13 @@ public class MogoDBRestService {
 
         String[] ids = new String[]{fromId, toId};
         Arrays.sort(ids);
+        talkingContent.setId(UUID.randomUUID().toString());
         talkingContentHistory.setHistory(new Date());
         talkingContentHistory.setSign(StringSortUtil.getKeyByKeys(ids));
         talkingContentHistory.setTalkingContents(contents);
         mongoTest.savePeople(talkingContentHistory);
 
 
-        return mongoTest.getMogoHistoryByKey(fromId, new Date());
+        return mongoTest.getMogoHistoryByKey(fromId, new Date(0L), new Date());
     }
 }
