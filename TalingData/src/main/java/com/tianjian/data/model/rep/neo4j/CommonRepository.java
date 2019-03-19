@@ -1,4 +1,4 @@
-package com.tianjian.data.model.rep;
+package com.tianjian.data.model.rep.neo4j;
 
 import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.Neo4jRepository;

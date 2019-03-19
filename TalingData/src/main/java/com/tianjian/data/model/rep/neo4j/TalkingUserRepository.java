@@ -1,4 +1,4 @@
-package com.tianjian.data.model.rep;
+package com.tianjian.data.model.rep.neo4j;
 
 import com.tianjian.data.model.entity.relation.TalkingUser;
 import org.springframework.data.neo4j.repository.Neo4jRepository;

@@ -7,3 +7,4 @@ spring:
       username: neo4j
       password: tianjian
       uri: bolt://127.0.0.1:7687
+    mongodb:

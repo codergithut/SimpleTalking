@@ -33,7 +33,6 @@ public class TalkingGroup {
     @Property(name = "masters")
     private String masters;
 
-
     /**
      * groupid 数据库中
      */

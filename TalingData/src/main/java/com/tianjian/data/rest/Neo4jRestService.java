@@ -8,7 +8,7 @@ import com.tianjian.data.model.entity.test.ActedIn;
 import com.tianjian.data.model.entity.test.Directed;
 import com.tianjian.data.model.entity.test.Movie;
 import com.tianjian.data.model.entity.test.Person;
-import com.tianjian.data.model.rep.*;
+import com.tianjian.data.model.rep.neo4j.*;
 import com.tianjian.data.model.rep.test.ActedInRepository;
 import com.tianjian.data.model.rep.test.DirectedRepository;
 import com.tianjian.data.model.rep.test.MovieRepository;
@@ -17,8 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 /**
  * @ProjectName: com.tianjian.data.model.rest
