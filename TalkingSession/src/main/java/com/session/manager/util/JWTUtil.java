@@ -1,17 +1,20 @@
 package com.session.manager.util;
 
 import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.interfaces.Claim;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.session.manager.model.view.UserInfo;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.thymeleaf.util.StringUtils;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @ProjectName: com.session.manager
@@ -58,4 +61,27 @@ public class JWTUtil {
         }
         return null;
     }
+
+
+    public static String verifyToken(String token, String secret) {
+
+        if(StringUtils.isEmpty(token)) {
+            return token;
+        }
+        try {
+            Algorithm algorithm = Algorithm.HMAC256(secret);
+            JWTVerifier verifier = JWT.require(algorithm)
+                    .build();
+            DecodedJWT jwt = verifier.verify(token);
+            //todo 获取用户id
+            String subject = jwt.getSubject();
+            Map<String, Claim> claims = jwt.getClaims();
+            Claim claim = claims.get("sub");
+            System.out.println("----------------------------" + claim.asString() + "----------------------------");
+            return subject;
+        } catch (Exception e) {
+            throw new BadCredentialsException("JWT token verify fail", e);
+        }
+    }
+
 }

@@ -33,7 +33,8 @@ spring:
             enable: true
             required: true
 
-oauth2:
-  secret: test
+jwt:
+  key: TWFydGVsbEtwaURPVG9WTw==
+  md5-key: MD5KEY
 
 
