@@ -1,6 +1,6 @@
 package com;
 
-import com.session.manager.Application;
+import com.session.manager.SessionServer;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @UpdateRemark: 跟新说明
  * @Version: [v1.0]
  */
-@SpringBootTest(classes = Application.class)
+@SpringBootTest(classes = SessionServer.class)
 @RunWith(SpringRunner.class)
 @Component
 public class TestRedis {

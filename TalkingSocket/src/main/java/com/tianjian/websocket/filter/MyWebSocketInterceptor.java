@@ -1,6 +1,6 @@
 package com.tianjian.websocket.filter;
 
-import com.session.manager.util.JWTUtil;
+import com.common.util.JWTUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,7 +36,7 @@ public class MyWebSocketInterceptor implements HandshakeInterceptor {
             String token = ((ServletServerHttpRequest) request).getServletRequest().getParameter("token");
             String userId = JWTUtil.verifyToken(token, secret);
             attributes.put("userId", userId);
-//            attributes.put("userId", "tianjian");
+            attributes.put("userId", "tianjian");
             logger.info("用户唯一标识:" + userId);
         }
 

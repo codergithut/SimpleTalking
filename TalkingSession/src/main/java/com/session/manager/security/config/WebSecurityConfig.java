@@ -1,8 +1,8 @@
-package com.tianjian.secrity.config;
+package com.session.manager.security.config;
 
-import com.tianjian.secrity.security.filter.OptionsRequestFilter;
-import com.tianjian.secrity.security.handler.JsonLoginSuccessHandler;
-import com.tianjian.secrity.security.service.JwtUserService;
+import com.session.manager.security.filter.OptionsRequestFilter;
+import com.session.manager.security.handler.JsonLoginSuccessHandler;
+import com.session.manager.security.service.JwtUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -54,7 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 
 		http.authorizeRequests()
-				.antMatchers("/oauth/token","/actuator/health", "/webSocketServer").permitAll()
+				.antMatchers("/oauth/token","/actuator/health", "/webSocketServer", "/hello").permitAll()
 				.antMatchers(
 						"/**"
 				).hasAnyRole("USER")

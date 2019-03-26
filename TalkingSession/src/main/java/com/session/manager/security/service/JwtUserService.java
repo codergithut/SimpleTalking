@@ -1,8 +1,8 @@
-package com.tianjian.secrity.security.service;
+package com.session.manager.security.service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.tianjian.secrity.security.filter.MyUsernamePasswordAuthenticationFilter;
+import com.session.manager.security.filter.MyUsernamePasswordAuthenticationFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;

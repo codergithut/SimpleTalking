@@ -1,7 +1,7 @@
-package com.tianjian.secrity.security.handler;
+package com.session.manager.security.handler;
 
 import com.alibaba.fastjson.JSONObject;
-import com.tianjian.secrity.security.service.JwtUserService;
+import com.session.manager.security.service.JwtUserService;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -13,7 +13,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 

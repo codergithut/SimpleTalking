@@ -1,4 +1,4 @@
-package com.tianjian.secrity.security.handler;
+package com.session.manager.security.handler;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;

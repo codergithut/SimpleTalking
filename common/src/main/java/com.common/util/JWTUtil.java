@@ -1,14 +1,11 @@
-package com.session.manager.util;
+package com.common.util;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
-import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.session.manager.model.view.UserInfo;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.thymeleaf.util.StringUtils;
 
 import java.time.Instant;
@@ -28,7 +25,7 @@ import java.util.*;
  */
 public class JWTUtil {
 
-    public static String createTokenWithClaim(UserInfo userInfo, String secretKey, String[] audiences) {
+    public static String createTokenWithClaim(String userId, String secretKey, String[] audiences) {
 
         try {
             Algorithm algorithm = Algorithm.HMAC256(secretKey);
@@ -45,8 +42,7 @@ public class JWTUtil {
                     /*设置头部信息 Header*/
                     .withHeader(map)
                     /*设置 载荷 Payload*/
-                    .withClaim("userId", userInfo.getUserId())
-                    .withClaim("userName", userInfo.getUserName())
+                    .withClaim("userId", userId)
                     .withIssuer("SERVICE")//签名是有谁生成 例如 服务器
                     .withSubject("JWT token")//签名的主题
                     //.withNotBefore(new Date())//定义在什么时间之前，该jwt都是不可用的.
@@ -64,24 +60,19 @@ public class JWTUtil {
 
 
     public static String verifyToken(String token, String secret) {
-
         if(StringUtils.isEmpty(token)) {
             return token;
         }
-        try {
-            Algorithm algorithm = Algorithm.HMAC256(secret);
-            JWTVerifier verifier = JWT.require(algorithm)
-                    .build();
-            DecodedJWT jwt = verifier.verify(token);
-            //todo 获取用户id
-            String subject = jwt.getSubject();
-            Map<String, Claim> claims = jwt.getClaims();
-            Claim claim = claims.get("sub");
-            System.out.println("----------------------------" + claim.asString() + "----------------------------");
-            return subject;
-        } catch (Exception e) {
-            throw new BadCredentialsException("JWT token verify fail", e);
-        }
+        Algorithm algorithm = Algorithm.HMAC256(secret);
+        JWTVerifier verifier = JWT.require(algorithm)
+                .build();
+        DecodedJWT jwt = verifier.verify(token);
+        //todo 获取用户id
+        String subject = jwt.getSubject();
+        Map<String, Claim> claims = jwt.getClaims();
+        Claim claim = claims.get("sub");
+        System.out.println("----------------------------" + claim.asString() + "----------------------------");
+        return subject;
     }
 
 }

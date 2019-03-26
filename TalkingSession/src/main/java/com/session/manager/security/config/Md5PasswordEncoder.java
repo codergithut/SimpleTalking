@@ -1,4 +1,4 @@
-package com.tianjian.secrity.config;
+package com.session.manager.security.config;
 
 import com.common.util.MD5Util;
 import org.slf4j.Logger;
