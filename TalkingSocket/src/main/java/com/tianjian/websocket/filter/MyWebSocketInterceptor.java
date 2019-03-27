@@ -36,7 +36,6 @@ public class MyWebSocketInterceptor implements HandshakeInterceptor {
             String token = ((ServletServerHttpRequest) request).getServletRequest().getParameter("token");
             String userId = JWTUtil.verifyToken(token, secret);
             attributes.put("userId", userId);
-            attributes.put("userId", "tianjian");
             logger.info("用户唯一标识:" + userId);
         }
 
