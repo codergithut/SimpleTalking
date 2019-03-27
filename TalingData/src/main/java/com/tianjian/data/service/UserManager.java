@@ -1,8 +1,8 @@
 package com.tianjian.data.service;
 
-import com.tianjian.data.model.entity.relation.TalkingUser;
-import com.tianjian.data.model.service.FriendRelationServiceModel;
-import com.tianjian.data.model.service.GroupInfo;
+import com.tianjian.data.domain.model.entity.relation.TalkingUser;
+import com.tianjian.data.domain.model.service.FriendRelationServiceModel;
+import com.tianjian.data.domain.model.service.GroupInfo;
 
 /**
  * @ProjectName: com.tianjian.data.service

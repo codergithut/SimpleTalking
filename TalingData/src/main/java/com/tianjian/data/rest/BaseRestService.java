@@ -1,11 +1,10 @@
 package com.tianjian.data.rest;
 
 import com.common.util.StringSortUtil;
-import com.tianjian.data.model.entity.log.TalkingContentHistory;
-import com.tianjian.data.model.entity.user.TalkingContent;
-import com.tianjian.data.model.entity.user.TalkingContentJpaRepository;
-import com.tianjian.data.model.entity.user.UserInfo;
-import com.tianjian.data.model.entity.user.UserJpaRepository;
+import com.tianjian.data.domain.model.entity.user.TalkingContent;
+import com.tianjian.data.domain.model.entity.user.TalkingContentJpaRepository;
+import com.tianjian.data.domain.model.entity.user.UserInfo;
+import com.tianjian.data.domain.model.entity.user.UserJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

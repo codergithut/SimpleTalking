@@ -1,15 +1,15 @@
 package com.tianjian.data.service.impl;
 
-import com.tianjian.data.model.entity.relation.FriendRelation;
-import com.tianjian.data.model.entity.relation.GroupRelation;
-import com.tianjian.data.model.entity.relation.TalkingGroup;
-import com.tianjian.data.model.entity.relation.TalkingUser;
-import com.tianjian.data.model.rep.neo4j.FriendRelationRepository;
-import com.tianjian.data.model.rep.neo4j.GroupRelationRepository;
-import com.tianjian.data.model.rep.neo4j.TalkingGroupRepository;
-import com.tianjian.data.model.rep.neo4j.TalkingUserRepository;
-import com.tianjian.data.model.service.FriendRelationServiceModel;
-import com.tianjian.data.model.service.GroupInfo;
+import com.tianjian.data.domain.model.entity.relation.FriendRelation;
+import com.tianjian.data.domain.model.entity.relation.GroupRelation;
+import com.tianjian.data.domain.model.entity.relation.TalkingGroup;
+import com.tianjian.data.domain.model.entity.relation.TalkingUser;
+import com.tianjian.data.domain.model.rep.neo4j.FriendRelationRepository;
+import com.tianjian.data.domain.model.rep.neo4j.GroupRelationRepository;
+import com.tianjian.data.domain.model.rep.neo4j.TalkingGroupRepository;
+import com.tianjian.data.domain.model.rep.neo4j.TalkingUserRepository;
+import com.tianjian.data.domain.model.service.FriendRelationServiceModel;
+import com.tianjian.data.domain.model.service.GroupInfo;
 import com.tianjian.data.service.UserManager;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,9 +1,12 @@
 package com.tianjian.websocket.filter;
 
 import com.common.util.JWTUtil;
+import com.tianjian.kafka.config.CommonConfig;
+import com.tianjian.redis.service.UserTopicInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
@@ -24,6 +27,12 @@ public class MyWebSocketInterceptor implements HandshakeInterceptor {
     @Value("${jwt.key}")
     private String secret;
 
+    @Autowired
+    private UserTopicInfo userTopicInfo;
+
+    @Autowired
+    private CommonConfig commonConfig;
+
     /**
      * 在握手之前执行该方法, 继续握手返回true, 中断握手返回false. 通过attributes参数设置WebSocketSession的属性
      */
@@ -35,8 +44,11 @@ public class MyWebSocketInterceptor implements HandshakeInterceptor {
             //通过普通的登录方式写入userId 提供登录页面跳转实现
             String token = ((ServletServerHttpRequest) request).getServletRequest().getParameter("token");
             String userId = JWTUtil.verifyToken(token, secret);
-            attributes.put("userId", userId);
-            logger.info("用户唯一标识:" + userId);
+            boolean register = userTopicInfo.saveUserTopicInfo(userId,commonConfig.getTopic());
+            if(!register) {
+                logger.warn("user have register");
+                return false;
+            }
         }
 
         return true;
@@ -48,6 +60,7 @@ public class MyWebSocketInterceptor implements HandshakeInterceptor {
     @Override
     public void afterHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler,
                                Exception exception) {
+
 
     }
 

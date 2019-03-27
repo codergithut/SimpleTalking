@@ -43,7 +43,7 @@ public class JwtUserService implements UserDetailsService {
 	 */
 	public String createJWT(UserDetails user) throws UnsupportedEncodingException {
 		Algorithm algorithm = Algorithm.HMAC256(jwtKey);
-		Date date = new Date(System.currentTimeMillis()+3600*1000);  //设置1小时后过期
+		Date date = new Date(System.currentTimeMillis()+36000*10000);  //设置1小时后过期
         return JWT.create()
         		.withSubject(user.getUsername())
                 .withExpiresAt(date)
@@ -59,7 +59,7 @@ public class JwtUserService implements UserDetailsService {
 	 */
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		return User.builder().username("tj")
+		return User.builder().username(username)
 				.password("60d19ba08d1d40ba2ffeded057616340")
 				.roles("USER").build();
 	}

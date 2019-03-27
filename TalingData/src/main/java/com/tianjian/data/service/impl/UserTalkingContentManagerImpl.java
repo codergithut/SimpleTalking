@@ -1,7 +1,7 @@
 package com.tianjian.data.service.impl;
 
-import com.tianjian.data.model.entity.user.TalkingContent;
-import com.tianjian.data.model.entity.user.TalkingContentJpaRepository;
+import com.tianjian.data.domain.model.entity.user.TalkingContent;
+import com.tianjian.data.domain.model.entity.user.TalkingContentJpaRepository;
 import com.tianjian.data.service.UserTalkingContentManager;
 import org.springframework.beans.factory.annotation.Autowired;
 

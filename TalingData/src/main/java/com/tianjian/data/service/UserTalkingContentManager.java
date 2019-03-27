@@ -1,6 +1,6 @@
 package com.tianjian.data.service;
 
-import com.tianjian.data.model.entity.user.TalkingContent;
+import com.tianjian.data.domain.model.entity.user.TalkingContent;
 
 import java.util.List;
 

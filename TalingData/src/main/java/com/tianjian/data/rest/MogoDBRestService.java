@@ -1,9 +1,9 @@
 package com.tianjian.data.rest;
 
 import com.common.util.StringSortUtil;
-import com.tianjian.data.model.entity.log.TalkingContentHistory;
-import com.tianjian.data.model.entity.user.TalkingContent;
-import com.tianjian.data.model.rep.mongodb.TalkingContentHistroyResp;
+import com.tianjian.data.domain.model.entity.log.TalkingContentHistory;
+import com.tianjian.data.domain.model.entity.user.TalkingContent;
+import com.tianjian.data.domain.model.rep.mongodb.TalkingContentHistroyResp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
