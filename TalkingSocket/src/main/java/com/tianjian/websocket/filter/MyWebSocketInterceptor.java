@@ -16,6 +16,7 @@ import org.springframework.web.socket.server.HandshakeInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * Created by tianjian on 2019/3/4.
@@ -49,6 +50,8 @@ public class MyWebSocketInterceptor implements HandshakeInterceptor {
                 logger.warn("user have register");
                 return false;
             }
+            String sessionId = UUID.randomUUID().toString();
+            attributes.put("sessionId", sessionId);
             attributes.put("userId", userId);
         }
 

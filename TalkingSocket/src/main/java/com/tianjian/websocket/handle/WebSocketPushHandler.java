@@ -1,12 +1,15 @@
 package com.tianjian.websocket.handle;
 
 import com.alibaba.fastjson.JSONObject;
+import com.tianjian.kafka.bean.Message;
 import com.tianjian.redis.service.UserTopicInfo;
 import com.tianjian.websocket.model.TalkingContent;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.stereotype.Service;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -22,6 +25,7 @@ import java.util.Map;
 /**
  * Created by tianjian on 2019/3/4.
  */
+@Service
 public class WebSocketPushHandler extends TextWebSocketHandler {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -53,7 +57,6 @@ public class WebSocketPushHandler extends TextWebSocketHandler {
      */
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-//        System.out.println();
 //        TalkingContent talkingContent = JSONObject.parseObject(message.getPayload(), TalkingContent.class);
         TalkingContent talkingContent = new TalkingContent();
         talkingContent.setContent("this is test");
@@ -61,9 +64,8 @@ public class WebSocketPushHandler extends TextWebSocketHandler {
         talkingContent.setFromId("tj");
         talkingContent.setToId("tj1");
         talkingContent.setType("sms");
-        logger.info("系统处理xxx用户的请求信息。。。");
-        String topic =  userTopicInfo.getTopicByUserId(talkingContent.getToId());
-        kafkaTemplate.send(topic, JSONObject.toJSONString(talkingContent));
+        sendMessageToUser(talkingContent, "websocket");
+
     }
 
     /**
@@ -80,40 +82,49 @@ public class WebSocketPushHandler extends TextWebSocketHandler {
 
     /**
      * 自定义函数
-     * 给所有的在线用户发送消息
-     */
-    public void sendMessagesToUsers(TextMessage message) {
-        for (WebSocketSession user : userList) {
-            try {
-                // isOpen()在线就发送
-                if (user.isOpen()) {
-                    user.sendMessage(message);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-                logger.error(e.getLocalizedMessage());
-            }
-        }
-    }
-
-    /**
-     * 自定义函数
      * 发送消息给指定的在线用户
      */
-    public static void sendMessageToUser(String userId, TextMessage message) {
+    public void sendMessageToUser(TalkingContent talkingContent, String type) {
+        String userId = talkingContent.getToId();
         for (WebSocketSession user : userList) {
             if (user.getAttributes().get("userId").equals(userId)) {
                 try {
                     // isOpen()在线就发送
                     if (user.isOpen()) {
-                        user.sendMessage(message);
+                        user.sendMessage(new TextMessage(talkingContent.getContent()));
+                        saveTalkingContentingLog(talkingContent,"1");
+                        return ;
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
+                    saveTalkingContentingLog(talkingContent,"0");
+                    return ;
                 }
             }
         }
+
+        /**
+         * 如果本地能找到需要发送的session本机发送,否则通过消息中间件发送消息
+         */
+        if(!"kafka".equals(type)) {
+            String topic =  userTopicInfo.getTopicByUserId(talkingContent.getToId());
+            if(StringUtils.isBlank(topic)) {
+                saveTalkingContentingLog(talkingContent, "0");
+                return ;
+            }
+            kafkaTemplate.send(topic, JSONObject.toJSONString(talkingContent));
+            return ;
+        } else {
+            saveTalkingContentingLog(talkingContent, "0");
+        }
+
     }
+
+    private void saveTalkingContentingLog(TalkingContent talkingContent, String status) {
+        //todo 消息存储到数据库 包含消息内容和状态,是否发送成功的状态 异步发送到日志服务器,保存已经发送的和未能成功发送的消息数据
+        return ;
+    }
+
 
 }
 

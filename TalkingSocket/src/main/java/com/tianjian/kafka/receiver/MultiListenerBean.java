@@ -31,17 +31,15 @@ import java.util.Optional;
 @Component
 class MultiListenerBean {
 
+    @Autowired
+    private WebSocketPushHandler webSocketPushHandler;
+
     @KafkaHandler
     public void listen(String record) {
         System.out.println(record);
         TalkingContent talkingContent = JSONObject.parseObject(record, TalkingContent.class);
-        WebSocketPushHandler.sendMessageToUser(talkingContent.getToId(), new TextMessage(talkingContent.getContent()));
+        webSocketPushHandler.sendMessageToUser(talkingContent, "kafka");
     }
-//
-//    @KafkaHandler
-//    public void listen(Integer bar) {
-//        ...
-//    }
 
     @KafkaHandler(isDefault = true)
     @SendTo("receive")
