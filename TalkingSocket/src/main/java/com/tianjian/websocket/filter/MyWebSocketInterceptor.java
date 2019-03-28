@@ -49,6 +49,7 @@ public class MyWebSocketInterceptor implements HandshakeInterceptor {
                 logger.warn("user have register");
                 return false;
             }
+            attributes.put("userId", userId);
         }
 
         return true;

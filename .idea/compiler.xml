@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="common" />
+        <module name="TalingData" />
         <module name="TalkingLogging" />
         <module name="TalkingSession" />
         <module name="TalkingSocket" />
@@ -16,6 +17,7 @@
     <bytecodeTargetLevel>
       <module name="common" target="1.8" />
       <module name="SimpleTalking" target="1.8" />
+      <module name="TalingData" target="1.8" />
       <module name="TalkingLogging" target="1.8" />
       <module name="TalkingSession" target="1.8" />
       <module name="TalkingSocket" target="1.8" />
@@ -25,6 +27,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="SimpleTalking" options="-parameters" />
+      <module name="TalingData" options="-parameters" />
       <module name="TalkingLogging" options="-parameters" />
       <module name="TalkingSession" options="-parameters" />
       <module name="TalkingSocket" options="-parameters" />

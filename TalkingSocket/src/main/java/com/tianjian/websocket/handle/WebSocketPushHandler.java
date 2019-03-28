@@ -1,6 +1,5 @@
 package com.tianjian.websocket.handle;
 
-
 import com.alibaba.fastjson.JSONObject;
 import com.tianjian.redis.service.UserTopicInfo;
 import com.tianjian.websocket.model.TalkingContent;
@@ -54,11 +53,17 @@ public class WebSocketPushHandler extends TextWebSocketHandler {
      */
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-        System.out.println();
-        TalkingContent talkingContent = JSONObject.parseObject(message.getPayload(), TalkingContent.class);
+//        System.out.println();
+//        TalkingContent talkingContent = JSONObject.parseObject(message.getPayload(), TalkingContent.class);
+        TalkingContent talkingContent = new TalkingContent();
+        talkingContent.setContent("this is test");
+        talkingContent.setCreateDate(new Date());
+        talkingContent.setFromId("tj");
+        talkingContent.setToId("tj1");
+        talkingContent.setType("sms");
         logger.info("系统处理xxx用户的请求信息。。。");
         String topic =  userTopicInfo.getTopicByUserId(talkingContent.getToId());
-        kafkaTemplate.send(talkingContent.getToId(), topic);
+        kafkaTemplate.send(topic, JSONObject.toJSONString(talkingContent));
     }
 
     /**
@@ -95,7 +100,7 @@ public class WebSocketPushHandler extends TextWebSocketHandler {
      * 自定义函数
      * 发送消息给指定的在线用户
      */
-    public void sendMessageToUser(String userId, TextMessage message) {
+    public static void sendMessageToUser(String userId, TextMessage message) {
         for (WebSocketSession user : userList) {
             if (user.getAttributes().get("userId").equals(userId)) {
                 try {
@@ -105,20 +110,9 @@ public class WebSocketPushHandler extends TextWebSocketHandler {
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
-                    logger.error(e.getLocalizedMessage());
                 }
             }
         }
-    }
-
-    public static void main(String[] args) {
-        TalkingContent talkingContent = new TalkingContent();
-        talkingContent.setContent("this is test");
-        talkingContent.setCreateDate(new Date());
-        talkingContent.setFromId("tj");
-        talkingContent.setToId("tj1");
-        talkingContent.setType("sms");
-        System.out.println(JSONObject.toJSONString(talkingContent));
     }
 
 }

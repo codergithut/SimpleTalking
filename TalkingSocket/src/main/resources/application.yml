@@ -1,4 +1,24 @@
 spring:
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      retries: 0
+      batch-size: 16384
+      buffer-memory: 33554432
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      group-id: test-consumer-group
+      enable-auto-commit: true
+      auto-commit-interval: 100
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        partition.assignment.strategy: org.apache.kafka.clients.consumer.RoundRobinAssignor
+    properties:
+      spring.json.trusted.package: com.tianjian.kafka.bean
+  thymeleaf:
+    prefix: classpath:/templates/
   redis:
     #数据库索引
     database: 0
@@ -18,3 +38,10 @@ spring:
     #连接超时时间
     timeout: 10000
     #邮箱配置
+
+kafka:
+  topic: ${random.value}
+
+jwt:
+  key: TWFydGVsbEtwaURPVG9WTw==
+  md5-key: MD5KEY

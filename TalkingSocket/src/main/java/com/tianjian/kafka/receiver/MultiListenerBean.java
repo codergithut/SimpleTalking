@@ -1,7 +1,10 @@
 package com.tianjian.kafka.receiver;
 
+import com.alibaba.fastjson.JSONObject;
 import com.tianjian.kafka.bean.Message;
 import com.tianjian.kafka.config.CommonConfig;
+import com.tianjian.websocket.handle.WebSocketPushHandler;
+import com.tianjian.websocket.model.TalkingContent;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,6 +12,7 @@ import org.springframework.kafka.annotation.KafkaHandler;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Component;
+import org.springframework.web.socket.TextMessage;
 
 import java.util.Optional;
 
@@ -23,13 +27,15 @@ import java.util.Optional;
  * @UpdateRemark: tianjian
  * @Version: v1.0
  */
-//@KafkaListener(topics = {"#{commonConfig.topic}"})
+@KafkaListener(topics = {"#{commonConfig.topic}"})
 @Component
 class MultiListenerBean {
 
     @KafkaHandler
     public void listen(String record) {
-        System.out.println("receive string " + record);
+        System.out.println(record);
+        TalkingContent talkingContent = JSONObject.parseObject(record, TalkingContent.class);
+        WebSocketPushHandler.sendMessageToUser(talkingContent.getToId(), new TextMessage(talkingContent.getContent()));
     }
 //
 //    @KafkaHandler
