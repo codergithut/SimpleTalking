@@ -1,9 +1,8 @@
 package com.tianjian.websocket.handle;
 
 import com.alibaba.fastjson.JSONObject;
-import com.tianjian.kafka.bean.Message;
 import com.tianjian.redis.service.UserTopicInfo;
-import com.tianjian.websocket.model.TalkingContent;
+import com.common.domain.model.TalkingContent;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,10 +15,7 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 /**
@@ -85,19 +81,25 @@ public class WebSocketPushHandler extends TextWebSocketHandler {
      * 发送消息给指定的在线用户
      */
     public void sendMessageToUser(TalkingContent talkingContent, String type) {
+        talkingContent.setConsume(false);
+        talkingContent.setId(UUID.randomUUID().toString());
         String userId = talkingContent.getToId();
+        /**
+         * 尝试发送消息到客户端
+         */
         for (WebSocketSession user : userList) {
             if (user.getAttributes().get("userId").equals(userId)) {
                 try {
                     // isOpen()在线就发送
                     if (user.isOpen()) {
                         user.sendMessage(new TextMessage(talkingContent.getContent()));
-                        saveTalkingContentingLog(talkingContent,"1");
+                        talkingContent.setConsume(true);
+                        saveTalkingContentingLog(talkingContent);
                         return ;
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
-                    saveTalkingContentingLog(talkingContent,"0");
+                    saveTalkingContentingLog(talkingContent);
                     return ;
                 }
             }
@@ -108,20 +110,23 @@ public class WebSocketPushHandler extends TextWebSocketHandler {
          */
         if(!"kafka".equals(type)) {
             String topic =  userTopicInfo.getTopicByUserId(talkingContent.getToId());
-            if(StringUtils.isBlank(topic)) {
-                saveTalkingContentingLog(talkingContent, "0");
+            if(!StringUtils.isBlank(topic)) {
+                kafkaTemplate.send(topic, JSONObject.toJSONString(talkingContent));
                 return ;
             }
-            kafkaTemplate.send(topic, JSONObject.toJSONString(talkingContent));
-            return ;
-        } else {
-            saveTalkingContentingLog(talkingContent, "0");
         }
+
+        saveTalkingContentingLog(talkingContent);
+        return;
 
     }
 
-    private void saveTalkingContentingLog(TalkingContent talkingContent, String status) {
-        //todo 消息存储到数据库 包含消息内容和状态,是否发送成功的状态 异步发送到日志服务器,保存已经发送的和未能成功发送的消息数据
+    /**
+     * 保存日志到数据库
+     * @param talkingContent 聊天日志
+     */
+    private void saveTalkingContentingLog(TalkingContent talkingContent) {
+        kafkaTemplate.send("talkingContentLog", JSONObject.toJSONString(talkingContent));
         return ;
     }
 

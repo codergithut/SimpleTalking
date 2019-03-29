@@ -1,4 +1,4 @@
-package com.tianjian.websocket.model;
+package com.common.domain.model;
 
 import java.util.Date;
 
@@ -29,10 +29,8 @@ public class TalkingContent {
 
     private Date createDate;
 
+    private boolean consume;
 
-    public String getId() {
-        return id;
-    }
 
     public String getSign() {
         return sign;
@@ -40,10 +38,6 @@ public class TalkingContent {
 
     public void setSign(String sign) {
         this.sign = sign;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
 
@@ -87,4 +81,19 @@ public class TalkingContent {
         this.createDate = createDate;
     }
 
+    public boolean isConsume() {
+        return consume;
+    }
+
+    public void setConsume(boolean consume) {
+        this.consume = consume;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 }

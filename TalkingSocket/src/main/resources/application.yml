@@ -45,3 +45,6 @@ kafka:
 jwt:
   key: TWFydGVsbEtwaURPVG9WTw==
   md5-key: MD5KEY
+
+server:
+  port: 8082

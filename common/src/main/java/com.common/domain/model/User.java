@@ -1,4 +1,4 @@
-package com.tianjian.websocket.model;
+package com.common.domain.model;
 
 /**
  * Created by tianjian on 2019/3/4.
