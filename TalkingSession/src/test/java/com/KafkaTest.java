@@ -34,9 +34,9 @@ public class KafkaTest {
         props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 
-        Producer<String, String> producer = new KafkaProducer<String, String>(props);
-        producer.send(new ProducerRecord<String, String>("test", "key", "value"));
-        producer.close();
+//        Producer<String, String> producer = new KafkaProducer<String, String>(props);
+//        producer.send(new ProducerRecord<String, String>("test", "key", "value"));
+//        producer.close();
     }
 
     @Test
@@ -54,14 +54,14 @@ public class KafkaTest {
         top.add("892c9a28-bdcc-48d1-aeb8-8d6bc9021495");
         kafkaConsumer.subscribe(top);
 
-        ConsumerRecords s = kafkaConsumer.poll(100);
-        Iterable<ConsumerRecord<String, String>> d = s.records("892c9a28-bdcc-48d1-aeb8-8d6bc9021495");
-        for(ConsumerRecord<String,String> ss : d) {
-            System.out.println(ss.key());
-            System.out.println(ss.value());
-        }
-
-        System.out.println(s);
+//        ConsumerRecords s = kafkaConsumer.poll(100);
+//        Iterable<ConsumerRecord<String, String>> d = s.records("892c9a28-bdcc-48d1-aeb8-8d6bc9021495");
+//        for(ConsumerRecord<String,String> ss : d) {
+//            System.out.println(ss.key());
+//            System.out.println(ss.value());
+//        }
+//
+//        System.out.println(s);
     }
 
 }

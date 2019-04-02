@@ -14,8 +14,9 @@ services:
     image: wurstmeister/kafka
     ports:
       - "9092:9092"
+    hostname: kafka
     environment:
-      KAFKA_ADVERTISED_HOST_NAME: "192.168.10.60"
+      KAFKA_ADVERTISED_HOST_NAME: kafka
       KAFKA_ZOOKEEPER_CONNECT: "zoo1:2181"
       KAFKA_BROKER_ID: 1
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
@@ -52,6 +53,20 @@ services:
       #MYSQL_PASS: 'test'
     volumes:
       - mysql_data:/var/lib/mysql
+
+  myservice:
+    image: tianjian3209/talking_socket
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - kafka1
+      - mysql
+      - Rdis
+      - Neo4j
+      - zoo1
+    links:
+      - kafka1
 
 networks:
   dev:
