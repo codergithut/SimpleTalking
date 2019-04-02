@@ -1,0 +1,62 @@
+version: "3.3"
+services:
+  zoo1:
+    image: wurstmeister/zookeeper
+    restart: unless-stopped
+    hostname: zoo1
+    ports:
+      - "2181:2181"
+    container_name: zookeeper
+
+  # kafka version: 1.1.0
+  # scala version: 2.12
+  kafka1:
+    image: wurstmeister/kafka
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: "192.168.10.60"
+      KAFKA_ZOOKEEPER_CONNECT: "zoo1:2181"
+      KAFKA_BROKER_ID: 1
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_CREATE_TOPICS: "stream-in:1:1,stream-out:1:1"
+    depends_on:
+      - zoo1
+    container_name: kafka
+
+  Neo4j:
+    image: neo4j:3.4
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    restart: always
+  Rdis:
+    image: sameersbn/redis:latest
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/var/lib/redis
+    restart: always
+
+  mysql:
+    image: mysql:latest
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password #这行代码解决无法访问的问题
+    networks:
+      - dev
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: abc123
+      #MYSQL_USER: 'test'
+      #MYSQL_PASS: 'test'
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+networks:
+  dev:
+    driver: bridge
+
+volumes:
+  redis_data:
+  mysql_data:
