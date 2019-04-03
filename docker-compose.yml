@@ -8,8 +8,6 @@ services:
       - "2181:2181"
     container_name: zookeeper
 
-  # kafka version: 1.1.0
-  # scala version: 2.12
   kafka:
     image: wurstmeister/kafka
     ports:
@@ -67,6 +65,15 @@ services:
       - zoo1
     links:
       - kafka
+      - redis
+  oauth:
+    image: tianjian3209/talking_session
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - redis
+    links:
       - redis
 
 networks:
