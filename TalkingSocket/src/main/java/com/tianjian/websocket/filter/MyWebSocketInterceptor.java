@@ -52,6 +52,7 @@ public class MyWebSocketInterceptor implements HandshakeInterceptor {
             if(!register) {
                 webSocketPushHandler.removeSocketByUserId(userId);
                 logger.warn("user have register");
+                System.out.println("===================================");
             }
             String sessionId = UUID.randomUUID().toString();
             attributes.put("sessionId", sessionId);
