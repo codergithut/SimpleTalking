@@ -10,11 +10,10 @@ services:
 
   # kafka version: 1.1.0
   # scala version: 2.12
-  kafka1:
+  kafka:
     image: wurstmeister/kafka
     ports:
       - "9092:9092"
-    hostname: kafka
     environment:
       KAFKA_ADVERTISED_HOST_NAME: kafka
       KAFKA_ZOOKEEPER_CONNECT: "zoo1:2181"
@@ -25,13 +24,14 @@ services:
       - zoo1
     container_name: kafka
 
-  Neo4j:
+  neo4j:
     image: neo4j:3.4
     ports:
       - "7474:7474"
       - "7687:7687"
     restart: always
-  Rdis:
+
+  redis:
     image: sameersbn/redis:latest
     ports:
       - "6379:6379"
@@ -58,15 +58,16 @@ services:
     image: tianjian3209/talking_socket
     restart: always
     ports:
-      - "8080:8080"
+      - "8082:8082"
     depends_on:
-      - kafka1
+      - kafka
       - mysql
-      - Rdis
-      - Neo4j
+      - redis
+      - neo4j
       - zoo1
     links:
-      - kafka1
+      - kafka
+      - redis
 
 networks:
   dev:
