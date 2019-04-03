@@ -3,6 +3,7 @@ package com.tianjian.websocket.filter;
 import com.common.util.JWTUtil;
 import com.tianjian.kafka.config.CommonConfig;
 import com.tianjian.redis.service.UserTopicInfo;
+import com.tianjian.websocket.handle.WebSocketPushHandler;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,21 +35,23 @@ public class MyWebSocketInterceptor implements HandshakeInterceptor {
     @Autowired
     private CommonConfig commonConfig;
 
+    @Autowired
+    private WebSocketPushHandler webSocketPushHandler;
+
     /**
      * 在握手之前执行该方法, 继续握手返回true, 中断握手返回false. 通过attributes参数设置WebSocketSession的属性
      */
     @Override
     public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler,
                                    Map<String, Object> attributes) throws Exception {
-        logger.info("xxx用户建立连接。。。");
         if (request instanceof ServletServerHttpRequest) {
             //通过普通的登录方式写入userId 提供登录页面跳转实现
             String token = ((ServletServerHttpRequest) request).getServletRequest().getParameter("token");
             String userId = JWTUtil.verifyToken(token, secret);
             boolean register = userTopicInfo.saveUserTopicInfo(userId,commonConfig.getTopic());
             if(!register) {
+                webSocketPushHandler.removeSocketByUserId(userId);
                 logger.warn("user have register");
-                return false;
             }
             String sessionId = UUID.randomUUID().toString();
             attributes.put("sessionId", sessionId);

@@ -39,7 +39,6 @@ public class WebSocketPushHandler extends TextWebSocketHandler {
      */
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        logger.info("xxx用户进入系统。。。");
         logger.info("用户信息:" + session.getAttributes());
         Map<String, Object> map = session.getAttributes();
         for (String key : map.keySet()) {
@@ -128,6 +127,20 @@ public class WebSocketPushHandler extends TextWebSocketHandler {
     private void saveTalkingContentingLog(TalkingContent talkingContent) {
         kafkaTemplate.send("talkingContentLog", JSONObject.toJSONString(talkingContent));
         return ;
+    }
+
+    public boolean removeSocketByUserId(String userId) {
+        for (WebSocketSession user : userList) {
+            if (user.getAttributes().get("userId").equals(userId)) {
+                try {
+                    user.close();
+                    return true;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return false;
     }
 
 
