@@ -2,9 +2,12 @@ package com.user.security.service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.user.domain.entity.UserInfo;
 import com.user.security.filter.MyUsernamePasswordAuthenticationFilter;
+import com.user.service.UserOpts;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
+import java.util.Optional;
 
 /**
  * @ProjectName: com.security.security.service
@@ -32,6 +36,9 @@ public class JwtUserService implements UserDetailsService {
 
 	@Value("${jwt.key}")
 	private String jwtKey;
+
+	@Autowired
+	private UserOpts userOpts;
 
 
 
@@ -53,14 +60,15 @@ public class JwtUserService implements UserDetailsService {
 
 	/**
 	 * 根据用户名查询用户信息
-	 * @param username
+	 * @param userId
 	 * @return
 	 * @throws UsernameNotFoundException
 	 */
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		return User.builder().username(username)
-				.password("60d19ba08d1d40ba2ffeded057616340")
+	public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
+		Optional<UserInfo> data = userOpts.getUserInfoByUserId(userId);
+		return User.builder().username(userId)
+				.password(data.get().getPassword())
 				.roles("USER").build();
 	}
 

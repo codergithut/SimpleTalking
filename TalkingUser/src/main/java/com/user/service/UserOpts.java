@@ -2,11 +2,13 @@ package com.user.service;
 
 import com.user.domain.entity.UserInfo;
 import com.user.domain.entity.UserJpaRepository;
+import com.user.security.config.Md5PasswordEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -23,12 +25,18 @@ import java.util.UUID;
 public class UserOpts {
 
     @Autowired
+    private Md5PasswordEncoder md5PasswordEncoder;
+
+    @Autowired
     UserJpaRepository userJpaRepository;
 
 
     public void addUser(UserInfo userInfo) {
         if(StringUtils.isEmpty(userInfo.getId())) {
             userInfo.setId(UUID.randomUUID().toString());
+        }
+        if(!StringUtils.isEmpty(userInfo.getPassword())) {
+            userInfo.setPassword(md5PasswordEncoder.encode(userInfo.getPassword()));
         }
         userJpaRepository.save(userInfo);
     }
@@ -39,5 +47,9 @@ public class UserOpts {
 
     public void removeUserById(String id) {
         userJpaRepository.deleteById(id);
+    }
+
+    public Optional<UserInfo> getUserInfoByUserId(String id) {
+        return userJpaRepository.findById(id);
     }
 }
