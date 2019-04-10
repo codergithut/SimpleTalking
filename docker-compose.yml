@@ -52,7 +52,7 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
 
-  myservice:
+  talkingsocket:
     image: tianjian3209/talking_socket
     restart: always
     ports:
@@ -66,17 +66,31 @@ services:
     links:
       - kafka
       - redis
-  user:
+
+  talkinguser:
     image: tianjian3209/talking_user
     restart: always
     ports:
-      - "8080:8080"
+      - "8083:8083"
     depends_on:
       - redis
       - mysql
     links:
       - redis
       - mysql
+
+  talkinglog:
+    image: tianjian3209/talking_logging
+    restart: always
+    ports:
+      - "8081:8081"
+    depends_on:
+      - redis
+      - mysql
+    links:
+      - redis
+      - mysql
+
 
 networks:
   dev:
