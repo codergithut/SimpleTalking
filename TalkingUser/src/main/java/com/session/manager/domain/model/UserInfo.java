@@ -1,4 +1,4 @@
-package com.session.manager.model;
+package com.session.manager.domain.model;
 
 /**
  * @ProjectName: com.session.manager.model.view
