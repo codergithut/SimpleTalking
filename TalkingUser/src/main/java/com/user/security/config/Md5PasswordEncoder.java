@@ -1,4 +1,4 @@
-package com.session.manager.security.config;
+package com.user.security.config;
 
 import com.common.util.MD5Util;
 import org.slf4j.Logger;

@@ -1,7 +1,7 @@
-package com.session.manager.security.handler;
+package com.user.security.handler;
 
 import com.alibaba.fastjson.JSONObject;
-import com.session.manager.security.service.JwtUserService;
+import com.user.security.service.JwtUserService;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;

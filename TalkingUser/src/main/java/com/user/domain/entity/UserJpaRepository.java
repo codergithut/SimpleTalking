@@ -1,4 +1,4 @@
-package com.tianjian.data.domain.model.entity.user;
+package com.user.domain.entity;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

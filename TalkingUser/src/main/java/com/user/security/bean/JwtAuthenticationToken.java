@@ -1,4 +1,4 @@
-package com.session.manager.security.bean;
+package com.user.security.bean;
 
 import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.security.authentication.AbstractAuthenticationToken;

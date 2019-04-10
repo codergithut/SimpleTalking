@@ -1,4 +1,4 @@
-package com.session.manager.security.handler;
+package com.user.security.handler;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;

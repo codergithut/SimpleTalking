@@ -1,4 +1,4 @@
-package com.session.manager.security.filter;
+package com.user.security.filter;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;

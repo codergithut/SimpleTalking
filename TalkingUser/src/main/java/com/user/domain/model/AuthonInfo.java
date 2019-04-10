@@ -1,4 +1,4 @@
-package com.session.manager.domain.model;
+package com.user.domain.model;
 
 /**
  * @ProjectName: com.session.manager.model.view
@@ -10,7 +10,7 @@ package com.session.manager.domain.model;
  * @UpdateRemark: 跟新说明
  * @Version: [v1.0]
  */
-public class UserInfo {
+public class AuthonInfo {
 
     private String userId;
 

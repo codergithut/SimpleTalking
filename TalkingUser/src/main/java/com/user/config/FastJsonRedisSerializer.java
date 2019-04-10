@@ -1,4 +1,4 @@
-package com.session.manager.config;
+package com.user.config;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;

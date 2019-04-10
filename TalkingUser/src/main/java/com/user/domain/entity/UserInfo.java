@@ -1,5 +1,6 @@
-package com.tianjian.data.domain.model.entity.user;
+package com.user.domain.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -15,10 +16,11 @@ import javax.persistence.Table;
  * @Version: [v1.0]
  */
 @Entity
-@Table(name = "user")
+@Table(name = "userInfo")
 public class UserInfo {
 
     @Id
+    @Column(length=200)
     private String id;
 
     /**

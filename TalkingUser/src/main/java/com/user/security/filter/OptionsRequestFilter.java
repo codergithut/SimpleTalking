@@ -1,4 +1,4 @@
-package com.session.manager.security.filter;
+package com.user.security.filter;
 
 import org.springframework.web.filter.OncePerRequestFilter;
 

@@ -1,8 +1,8 @@
-package com.session.manager.security.config;
+package com.user.security.config;
 
 
-import com.session.manager.security.filter.MyUsernamePasswordAuthenticationFilter;
-import com.session.manager.security.handler.HttpStatusLoginFailureHandler;
+import com.user.security.filter.MyUsernamePasswordAuthenticationFilter;
+import com.user.security.handler.HttpStatusLoginFailureHandler;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.HttpSecurityBuilder;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
