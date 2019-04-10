@@ -19,6 +19,7 @@ import java.util.*;
 
 
 /**
+ * websocket 文字消息处理
  * Created by tianjian on 2019/3/4.
  */
 @Service
@@ -142,7 +143,6 @@ public class WebSocketPushHandler extends TextWebSocketHandler {
         }
         return false;
     }
-
 
 }
 
