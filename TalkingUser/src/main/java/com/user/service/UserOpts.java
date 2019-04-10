@@ -31,14 +31,14 @@ public class UserOpts {
     UserJpaRepository userJpaRepository;
 
 
-    public void addUser(UserInfo userInfo) {
+    public UserInfo addUser(UserInfo userInfo) {
         if(StringUtils.isEmpty(userInfo.getId())) {
             userInfo.setId(UUID.randomUUID().toString());
         }
         if(!StringUtils.isEmpty(userInfo.getPassword())) {
             userInfo.setPassword(md5PasswordEncoder.encode(userInfo.getPassword()));
         }
-        userJpaRepository.save(userInfo);
+        return userJpaRepository.save(userInfo);
     }
 
     public List<UserInfo> getAllUserInfo() {

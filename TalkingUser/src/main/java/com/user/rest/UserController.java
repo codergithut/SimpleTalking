@@ -27,8 +27,8 @@ public class UserController {
     UserOpts userOpts;
 
     @PostMapping("/register")
-    public void registerUser(@RequestBody UserInfo userInfo) {
-        userOpts.addUser(userInfo);
+    public UserInfo registerUser(@RequestBody UserInfo userInfo) {
+        return userOpts.addUser(userInfo);
     }
 
     @GetMapping("/getAll")
