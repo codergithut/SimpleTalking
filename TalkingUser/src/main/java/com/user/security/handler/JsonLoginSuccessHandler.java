@@ -13,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -57,7 +58,20 @@ public class JsonLoginSuccessHandler implements AuthenticationSuccessHandler {
 		authInfo.put("exp", userInfo.get("exp").toString());
 		authInfo.put("iat", userInfo.get("iat").toString());
 		response.setHeader("Content-Type", "application/json");
-		response.setHeader("Authorization", token);
+//        //为头写入Authorization信息
+//		response.setHeader("Authorization", token);
+		try {
+			write(response, userInfo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void write(HttpServletResponse response, Object o)throws Exception{
+		PrintWriter out=response.getWriter();
+		out.println(JSONObject.toJSONString(o));
+		out.flush();
+		out.close();
 	}
 
 
