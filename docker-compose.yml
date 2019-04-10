@@ -66,15 +66,17 @@ services:
     links:
       - kafka
       - redis
-  oauth:
-    image: tianjian3209/talking_session
+  user:
+    image: tianjian3209/talking_user
     restart: always
     ports:
       - "8080:8080"
     depends_on:
       - redis
+      - mysql
     links:
       - redis
+      - mysql
 
 networks:
   dev:

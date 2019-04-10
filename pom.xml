@@ -10,9 +10,8 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>TalkingLogging</module>
-        <module>TalkingSession</module>
-        <module>TalkingUser</module>
         <module>TalkingSocket</module>
+        <module>TalkingUser</module>
         <module>common</module>
         <module>TalingData</module>
     </modules>
