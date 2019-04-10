@@ -49,6 +49,10 @@ public class UserOpts {
         userJpaRepository.deleteById(id);
     }
 
+    public void removeAllUser() {
+        userJpaRepository.deleteAll();
+    }
+
     public Optional<UserInfo> getUserInfoByUserId(String id) {
         return userJpaRepository.findById(id);
     }

@@ -36,4 +36,14 @@ public class UserController {
         return userOpts.getAllUserInfo();
     }
 
+    @DeleteMapping("/removeAll")
+    public void removeUser() {
+        userOpts.removeAllUser();
+    }
+
+    @DeleteMapping("/deleteById")
+    public void removeByUerId(@RequestParam(value="userId") String userId) {
+        userOpts.getUserInfoByUserId(userId);
+    }
+
 }
