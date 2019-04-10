@@ -1,6 +1,7 @@
 package com.tianjian.websocket.handle;
 
 import com.alibaba.fastjson.JSONObject;
+import com.common.util.StringSortUtil;
 import com.tianjian.redis.service.UserTopicInfo;
 import com.common.domain.model.TalkingContent;
 import org.apache.commons.lang3.StringUtils;
@@ -97,7 +98,10 @@ public class WebSocketPushHandler extends TextWebSocketHandler {
             if(!StringUtils.isBlank(topic)) {
                 kafkaTemplate.send(topic, JSONObject.toJSONString(talkingContent));
                 return ;
+            } else {
+                saveTalkingContentingLog(talkingContent);
             }
+
         }
 
         /**
@@ -125,6 +129,8 @@ public class WebSocketPushHandler extends TextWebSocketHandler {
      * @param talkingContent 聊天日志
      */
     private void saveTalkingContentingLog(TalkingContent talkingContent) {
+        String sign = StringSortUtil.getKeyByKeys(new String[]{talkingContent.getToId(), talkingContent.getFromId()});
+        talkingContent.setSign(sign);
         kafkaTemplate.send("talkingContentLog", JSONObject.toJSONString(talkingContent));
         return ;
     }
