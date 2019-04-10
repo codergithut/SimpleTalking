@@ -38,7 +38,7 @@ public class WebSocketPushHandler extends TextWebSocketHandler {
      * 用户进入系统监听
      */
     @Override
-    public void afterConnectionEstablished(WebSocketSession session) throws Exception {
+    public void afterConnectionEstablished(WebSocketSession session) {
         logger.info("用户信息:" + session.getAttributes());
         Map<String, Object> map = session.getAttributes();
         webSocketSessionMap.put(map.get("userId").toString(), session);
@@ -48,9 +48,13 @@ public class WebSocketPushHandler extends TextWebSocketHandler {
      * 处理用户请求
      */
     @Override
-    protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-        logger.info("receive message from client ={}", message.getPayload());
-        TalkingContent talkingContent = JSONObject.parseObject(message.getPayload(), TalkingContent.class);
+    protected void handleTextMessage(WebSocketSession session, TextMessage message) {
+        String content = message.getPayload();
+        if(StringUtils.isBlank(content)) {
+            return ;
+        }
+        logger.info("receive message from client ={}", content);
+        TalkingContent talkingContent = JSONObject.parseObject(content, TalkingContent.class);
         sendMessageToUser(talkingContent, "websocket");
 
     }
