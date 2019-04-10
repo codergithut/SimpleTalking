@@ -25,7 +25,7 @@ import java.util.*;
 public class WebSocketPushHandler extends TextWebSocketHandler {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
-    private static final List<WebSocketSession> userList = new ArrayList<>();
+    private static final Map<String, WebSocketSession> webSocketSessionMap = new HashMap();
 
     @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;
@@ -41,10 +41,7 @@ public class WebSocketPushHandler extends TextWebSocketHandler {
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         logger.info("用户信息:" + session.getAttributes());
         Map<String, Object> map = session.getAttributes();
-        for (String key : map.keySet()) {
-            logger.info("key:" + key + " and value:" + map.get(key));
-        }
-        userList.add(session);
+        webSocketSessionMap.put(map.get("userId").toString(), session);
     }
 
     /**
@@ -52,13 +49,8 @@ public class WebSocketPushHandler extends TextWebSocketHandler {
      */
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-//        TalkingContent talkingContent = JSONObject.parseObject(message.getPayload(), TalkingContent.class);
-        TalkingContent talkingContent = new TalkingContent();
-        talkingContent.setContent("this is test");
-        talkingContent.setCreateDate(new Date());
-        talkingContent.setFromId("tj");
-        talkingContent.setToId("tj1");
-        talkingContent.setType("sms");
+        logger.info("receive message from client ={}", message.getPayload());
+        TalkingContent talkingContent = JSONObject.parseObject(message.getPayload(), TalkingContent.class);
         sendMessageToUser(talkingContent, "websocket");
 
     }
@@ -71,7 +63,7 @@ public class WebSocketPushHandler extends TextWebSocketHandler {
         if (session.isOpen()) {
             session.close();
         }
-        userList.remove(session);
+        webSocketSessionMap.remove(session.getAttributes().get("userId"));
         logger.info("xxx用户退出系统。。。");
     }
 
@@ -83,31 +75,19 @@ public class WebSocketPushHandler extends TextWebSocketHandler {
         talkingContent.setConsume(false);
         talkingContent.setId(UUID.randomUUID().toString());
         String userId = talkingContent.getToId();
+
         /**
-         * 尝试发送消息到客户端
+         * 如果是转发并发现服务socket已关闭,日志保存
          */
-        for (WebSocketSession user : userList) {
-            if (user.getAttributes().get("userId").equals(userId)) {
-                try {
-                    // isOpen()在线就发送
-                    if (user.isOpen()) {
-                        user.sendMessage(new TextMessage(talkingContent.getContent()));
-                        talkingContent.setConsume(true);
-                        saveTalkingContentingLog(talkingContent);
-                        return ;
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    saveTalkingContentingLog(talkingContent);
-                    return ;
-                }
-            }
+        if("Kafka".equals(type) && !webSocketSessionMap.containsKey(userId)) {
+            saveTalkingContentingLog(talkingContent);
+            return ;
         }
 
         /**
-         * 如果本地能找到需要发送的session本机发送,否则通过消息中间件发送消息
+         * 首次发送查看当前机器是否有发送用户
          */
-        if(!"kafka".equals(type)) {
+        if("websocket".equals(type) && !webSocketSessionMap.containsKey(userId)) {
             String topic =  userTopicInfo.getTopicByUserId(talkingContent.getToId());
             if(!StringUtils.isBlank(topic)) {
                 kafkaTemplate.send(topic, JSONObject.toJSONString(talkingContent));
@@ -115,8 +95,23 @@ public class WebSocketPushHandler extends TextWebSocketHandler {
             }
         }
 
-        saveTalkingContentingLog(talkingContent);
-        return;
+        /**
+         * 当前节点含有目标用户发送
+         */
+        try {
+            WebSocketSession user = webSocketSessionMap.get(userId);
+            // isOpen()在线就发送
+            if (user.isOpen()) {
+                user.sendMessage(new TextMessage(talkingContent.getContent()));
+                talkingContent.setConsume(true);
+                saveTalkingContentingLog(talkingContent);
+                return ;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            saveTalkingContentingLog(talkingContent);
+            return ;
+        }
 
     }
 
@@ -130,14 +125,15 @@ public class WebSocketPushHandler extends TextWebSocketHandler {
     }
 
     public boolean removeSocketByUserId(String userId) {
-        for (WebSocketSession user : userList) {
-            if (user.getAttributes().get("userId").equals(userId)) {
-                try {
-                    user.close();
-                    return true;
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+
+        WebSocketSession user = webSocketSessionMap.get(userId);
+
+        if (user.getAttributes().get("userId").equals(userId)) {
+            try {
+                user.close();
+                return true;
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
         return false;
