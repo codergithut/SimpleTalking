@@ -4,8 +4,8 @@
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/TalingData" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/TalkingLogging" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/TalkingSession" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/TalkingSocket" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/TalkingUser" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/TalkingUser" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/common" charset="UTF-8" />
   </component>

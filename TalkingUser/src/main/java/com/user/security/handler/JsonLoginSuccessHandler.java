@@ -58,10 +58,9 @@ public class JsonLoginSuccessHandler implements AuthenticationSuccessHandler {
 		authInfo.put("exp", userInfo.get("exp").toString());
 		authInfo.put("iat", userInfo.get("iat").toString());
 		response.setHeader("Content-Type", "application/json");
-//        //为头写入Authorization信息
-//		response.setHeader("Authorization", token);
+		response.setHeader("Authorization", token);
 		try {
-			write(response, userInfo);
+			write(response, authInfo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

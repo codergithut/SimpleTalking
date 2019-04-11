@@ -1,5 +1,6 @@
 package com.tianjian.log.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -23,6 +24,7 @@ public class TalkingContentLog {
      * 记录id
      */
     @Id
+    @Column(length=200)
     private String id;
 
     /**

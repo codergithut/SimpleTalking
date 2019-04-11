@@ -1,6 +1,16 @@
 spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://119.3.107.239:3306/mysql?Unicode=true&characterEncoding=UTF-8&useSSL=false
+    #url: jdbc:mysql://mysql:3306/mysql?Unicode=true&characterEncoding=UTF-8&useSSL=false
+    username: root
+    password: abc123
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
   kafka:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: kafka:9092
     producer:
       retries: 0
       batch-size: 16384
@@ -15,16 +25,6 @@ spring:
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
         partition.assignment.strategy: org.apache.kafka.clients.consumer.RoundRobinAssignor
-  data:
-    datasource:
-      driver-class-name: com.mysql.jdbc.Driver
-      url: jdbc:mysql://127.0.0.1:3306/xxl-job?Unicode=true&characterEncoding=UTF-8
-      username: root
-      password: root_pwd
-    jpa:
-      show-sql: true
-      hibernate:
-        ddl-auto: update
 
 server:
   port: 8081

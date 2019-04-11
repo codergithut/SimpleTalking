@@ -9,8 +9,8 @@
         <module name="common" />
         <module name="TalingData" />
         <module name="talking_logging" />
-        <module name="talking_session" />
         <module name="talking_socket" />
+        <module name="talking_user" />
         <module name="TalkingLogging" />
         <module name="TalkingSession" />
         <module name="TalkingSocket" />
@@ -22,7 +22,6 @@
       <module name="SimpleTalking" target="1.8" />
       <module name="TalingData" target="1.8" />
       <module name="talking_logging" target="1.8" />
-      <module name="talking_session" target="1.8" />
       <module name="talking_socket" target="1.8" />
       <module name="talking_user" target="1.8" />
       <module name="TalkingLogging" target="1.8" />
@@ -41,7 +40,6 @@
       <module name="TalkingUser" options="-parameters" />
       <module name="common" options="-parameters" />
       <module name="talking_logging" options="-parameters" />
-      <module name="talking_session" options="-parameters" />
       <module name="talking_socket" options="-parameters" />
       <module name="talking_user" options="-parameters" />
     </option>
