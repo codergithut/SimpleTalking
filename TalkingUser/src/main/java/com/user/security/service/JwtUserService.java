@@ -66,7 +66,7 @@ public class JwtUserService implements UserDetailsService {
 	 */
 	@Override
 	public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
-		Optional<UserInfo> data = userOpts.getUserInfoByUserId(userId);
+		Optional<UserInfo> data = userOpts.getUserInfoByUserId(Long.valueOf(userId));
 		return User.builder().username(userId)
 				.password(data.get().getPassword())
 				.roles("USER").build();

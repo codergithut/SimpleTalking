@@ -42,7 +42,7 @@ public class UserController {
     }
 
     @DeleteMapping("/deleteById")
-    public void removeByUerId(@RequestParam(value="userId") String userId) {
+    public void removeByUerId(@RequestParam(value="userId") Long userId) {
         userOpts.getUserInfoByUserId(userId);
     }
 

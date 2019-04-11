@@ -9,7 +9,6 @@ import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 /**
  * @ProjectName: com.user.service
@@ -32,9 +31,6 @@ public class UserOpts {
 
 
     public UserInfo addUser(UserInfo userInfo) {
-        if(StringUtils.isEmpty(userInfo.getId())) {
-            userInfo.setId(UUID.randomUUID().toString());
-        }
         if(!StringUtils.isEmpty(userInfo.getPassword())) {
             userInfo.setPassword(md5PasswordEncoder.encode(userInfo.getPassword()));
         }
@@ -45,7 +41,7 @@ public class UserOpts {
         return userJpaRepository.findAll();
     }
 
-    public void removeUserById(String id) {
+    public void removeUserById(Long id) {
         userJpaRepository.deleteById(id);
     }
 
@@ -53,7 +49,7 @@ public class UserOpts {
         userJpaRepository.deleteAll();
     }
 
-    public Optional<UserInfo> getUserInfoByUserId(String id) {
+    public Optional<UserInfo> getUserInfoByUserId(Long id) {
         return userJpaRepository.findById(id);
     }
 }
