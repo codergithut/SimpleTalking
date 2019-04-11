@@ -2,11 +2,15 @@ package com.tianjian.log.rest;
 
 import com.alibaba.fastjson.JSONObject;
 import com.common.domain.model.TalkingContent;
+import com.common.util.DateUtil;
 import com.tianjian.log.domain.TalkingContentLog;
 import com.tianjian.log.domain.TalkingContentLogJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
+import org.thymeleaf.util.DateUtils;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -42,6 +46,24 @@ public class LogController {
             talkingContentLogJpaRepository.save(talkingContentLog);
 //            talkingContentLog.setConsumeDate(new Date());
         }
+
+    }
+
+    @GetMapping("/getLogByDay")
+    public List<TalkingContentLog> getTalkingContentLogByDate(@RequestParam(value="day") String date,
+                                                              @RequestParam(value="userId") String userId) {
+        List<TalkingContentLog> allLogs = new ArrayList<TalkingContentLog>();
+        Date start = DateUtil.getStartOfDay(date);
+        Date end = DateUtil.getEndOfDay(date);
+        List<TalkingContentLog> from = talkingContentLogJpaRepository.findByFromId(userId, start, end);
+        List<TalkingContentLog> to = talkingContentLogJpaRepository.findByToId(userId, start, end);
+        if(CollectionUtils.isEmpty(from)) {
+            allLogs.addAll(from);
+        }
+        if(CollectionUtils.isEmpty(to)) {
+            allLogs.addAll(to);
+        }
+        return allLogs;
 
     }
 

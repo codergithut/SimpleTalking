@@ -21,5 +21,9 @@ public interface TalkingContentLogJpaRepository extends JpaRepository<TalkingCon
 
     List<TalkingContentLog> findBySignAndCreateDateBetween(String sign, Date startTime, Date endTime);
 
+    List<TalkingContentLog> findByFromId(String fromId, Date startTime, Date endTime);
+
+    List<TalkingContentLog> findByToId(String toId, Date startTime, Date endTime);
+
     List<TalkingContentLog> findByToIdAndConsume(String toId, boolean consume);
 }
