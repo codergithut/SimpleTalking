@@ -22,12 +22,12 @@ services:
       - zoo1
     container_name: kafka
 
-  neo4j:
-    image: neo4j:3.4
-    ports:
-      - "7474:7474"
-      - "7687:7687"
-    restart: always
+#  neo4j:
+#    image: neo4j:3.4
+#    ports:
+#      - "7474:7474"
+#      - "7687:7687"
+#    restart: always
 
   redis:
     image: sameersbn/redis:latest
@@ -61,7 +61,7 @@ services:
       - kafka
       - mysql
       - redis
-      - neo4j
+#      - neo4j
       - zoo1
     links:
       - kafka
