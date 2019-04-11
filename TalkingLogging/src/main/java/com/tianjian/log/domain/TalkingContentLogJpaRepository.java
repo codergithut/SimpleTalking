@@ -20,5 +20,5 @@ import java.util.List;
 public interface TalkingContentLogJpaRepository extends JpaRepository<TalkingContentLog, String> {
     List<TalkingContentLog> findBySignAndCreateDateBetween(String sign, Date startTime, Date endTime);
 
-    List<TalkingContentLog> findByToIdAndConsume(String toId, String consume);
+    List<TalkingContentLog> findByToIdAndConsume(String toId, boolean consume);
 }

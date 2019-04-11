@@ -29,7 +29,8 @@ public class LogController {
     private TalkingContentLogJpaRepository talkingContentLogJpaRepository;
 
     @GetMapping("/getUnReadInfoLog")
-    public List<TalkingContentLog> getUnReadInfo(@RequestParam(value="userId") String userId, @RequestParam(value="consume") String consume) {
+    public List<TalkingContentLog> getUnReadInfo(@RequestParam(value="userId") String userId,
+                                                 @RequestParam(value="consume") boolean consume) {
         return talkingContentLogJpaRepository.findByToIdAndConsume(userId, consume);
     }
 
