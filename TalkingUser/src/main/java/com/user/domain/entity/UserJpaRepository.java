@@ -14,5 +14,5 @@ import org.springframework.stereotype.Repository;
  * @Version: [v1.0]
  */
 @Repository
-public interface UserJpaRepository extends JpaRepository<UserInfo, String> {
+public interface UserJpaRepository extends JpaRepository<UserInfo, Integer> {
 }

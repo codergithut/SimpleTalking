@@ -1,9 +1,6 @@
 package com.user.domain.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * @ProjectName: com.tianjian.data.model.entity.user
@@ -20,8 +17,8 @@ import javax.persistence.Table;
 public class UserInfo {
 
     @Id
-    @Column(length=200)
-    private String id;
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Long id;
 
     /**
      * 用户名
@@ -114,11 +111,11 @@ public class UserInfo {
         this.sign = sign;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 }
