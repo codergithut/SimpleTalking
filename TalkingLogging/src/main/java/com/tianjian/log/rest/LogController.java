@@ -1,11 +1,13 @@
 package com.tianjian.log.rest;
 
+import com.alibaba.fastjson.JSONObject;
 import com.common.domain.model.TalkingContent;
 import com.tianjian.log.domain.TalkingContentLog;
 import com.tianjian.log.domain.TalkingContentLogJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -36,6 +38,7 @@ public class LogController {
         List<TalkingContentLog> datas = talkingContentLogJpaRepository.findAllById(ids);
         for(TalkingContentLog talkingContentLog : datas) {
             talkingContentLog.setConsume(true);
+            talkingContentLogJpaRepository.save(talkingContentLog);
 //            talkingContentLog.setConsumeDate(new Date());
         }
 
@@ -44,6 +47,12 @@ public class LogController {
     @GetMapping("/getAllLog")
     public List<TalkingContentLog> getTalkingContent() {
         return talkingContentLogJpaRepository.findAll();
+    }
+
+    public static void main(String[] args) {
+        List<String> ids = new ArrayList<>();
+        ids.add("test");
+        System.out.println(JSONObject.toJSONString(ids));
     }
 
 
