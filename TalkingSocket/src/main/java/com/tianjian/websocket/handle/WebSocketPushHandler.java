@@ -100,27 +100,31 @@ public class WebSocketPushHandler extends TextWebSocketHandler {
                 return ;
             } else {
                 saveTalkingContentingLog(talkingContent);
+                return ;
             }
 
         }
 
         /**
-         * 当前节点含有目标用户发送
+         * 当前节点含有目标用户发送 强校验,更加清晰易懂冗余代码if
          */
-        try {
-            WebSocketSession user = webSocketSessionMap.get(userId);
-            // isOpen()在线就发送
-            if (user.isOpen()) {
-                user.sendMessage(new TextMessage(talkingContent.getContent()));
-                talkingContent.setConsume(true);
+        if(webSocketSessionMap.containsKey(userId)) {
+            try {
+                WebSocketSession user = webSocketSessionMap.get(userId);
+                // isOpen()在线就发送
+                if (user.isOpen()) {
+                    user.sendMessage(new TextMessage(talkingContent.getContent()));
+                    talkingContent.setConsume(true);
+                    saveTalkingContentingLog(talkingContent);
+                    return ;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
                 saveTalkingContentingLog(talkingContent);
                 return ;
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-            saveTalkingContentingLog(talkingContent);
-            return ;
         }
+
 
     }
 

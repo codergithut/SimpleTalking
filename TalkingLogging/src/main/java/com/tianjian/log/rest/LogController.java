@@ -1,12 +1,12 @@
 package com.tianjian.log.rest;
 
+import com.common.domain.model.TalkingContent;
 import com.tianjian.log.domain.TalkingContentLog;
 import com.tianjian.log.domain.TalkingContentLogJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -26,9 +26,19 @@ public class LogController {
     @Autowired
     private TalkingContentLogJpaRepository talkingContentLogJpaRepository;
 
-    @GetMapping("/getLog")
-    public List<TalkingContentLog> getTalkingContentLogById(String userId) {
-        return talkingContentLogJpaRepository.findByToIdAndConsume(userId, "false");
+    @GetMapping("/getUnReadInfoLog")
+    public List<TalkingContentLog> getUnReadInfo(@RequestParam(value="userId") String userId, @RequestParam(value="consume") String consume) {
+        return talkingContentLogJpaRepository.findByToIdAndConsume(userId, consume);
+    }
+
+    @PostMapping("/updateLonInfo")
+    public void updateLogInfo(@RequestBody List<String> ids) {
+        List<TalkingContentLog> datas = talkingContentLogJpaRepository.findAllById(ids);
+        for(TalkingContentLog talkingContentLog : datas) {
+            talkingContentLog.setConsume(true);
+//            talkingContentLog.setConsumeDate(new Date());
+        }
+
     }
 
     @GetMapping("/getAllLog")

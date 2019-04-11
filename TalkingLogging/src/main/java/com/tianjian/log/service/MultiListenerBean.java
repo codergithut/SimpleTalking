@@ -10,6 +10,8 @@ import org.springframework.kafka.annotation.KafkaHandler;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
+
 /**
  * @ProjectName: com.tianjian.log
  * @Description: 一句话描述该类的功能
@@ -33,6 +35,9 @@ class MultiListenerBean {
         TalkingContent talkingContent = JSONObject.parseObject(record, TalkingContent.class);
         TalkingContentLog talkingContentLog = new TalkingContentLog();
         BeanUtils.copyProperties(talkingContent, talkingContentLog);
+//        if(talkingContent.isConsume()) {
+//            talkingContentLog.setConsumeDate(new Date());
+//        }
         TalkingContentLog s = talkingContentLogJpaRepository.save(talkingContentLog);
         System.out.println(s.getContent());
     }

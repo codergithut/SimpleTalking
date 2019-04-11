@@ -58,6 +58,11 @@ public class TalkingContentLog {
     private Date createDate;
 
     /**
+     * 消费时间
+     */
+//    private Date consumeDate;
+
+    /**
      * 是否已发送
      */
     private boolean consume;
@@ -125,4 +130,12 @@ public class TalkingContentLog {
     public void setConsume(boolean consume) {
         this.consume = consume;
     }
+
+//    public Date getConsumeDate() {
+//        return consumeDate;
+//    }
+//
+//    public void setConsumeDate(Date consumeDate) {
+//        this.consumeDate = consumeDate;
+//    }
 }

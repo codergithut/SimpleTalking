@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 public class UserTopicInfo {
 
     @Autowired
-    private RedisTemplate redisTemplate;
+    private RedisTemplate<String,String> redisTemplate;
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -46,7 +46,12 @@ public class UserTopicInfo {
     }
 
     public String getTopicByUserId(String userId) {
-        return redisTemplate.opsForValue().get(userId).toString();
+        if(redisTemplate.hasKey(userId)) {
+            return redisTemplate.opsForValue().get(userId);
+        } else {
+            return null;
+        }
+
     }
 
 }
