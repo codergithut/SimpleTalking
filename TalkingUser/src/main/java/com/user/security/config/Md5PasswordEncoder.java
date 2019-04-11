@@ -49,8 +49,6 @@ public class Md5PasswordEncoder implements PasswordEncoder {
      */
     @Override
     public boolean matches(CharSequence rawPassword, String encodedPassword) {
-        System.out.println("========================" + encodedPassword + "========================");
-        System.out.println("========================" + encode(rawPassword) + "========================");
         if(encodedPassword.equals(encode(rawPassword))) {
             return true;
         }
