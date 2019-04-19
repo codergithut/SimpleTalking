@@ -115,7 +115,7 @@ public class WebSocketPushHandler extends TextWebSocketHandler {
                 WebSocketSession user = webSocketSessionMap.get(userId);
                 // isOpen()在线就发送
                 if (user.isOpen()) {
-                    user.sendMessage(new TextMessage(talkingContent.getContent()));
+                    user.sendMessage(new TextMessage(JSONObject.toJSONString(talkingContent)));
                     talkingContent.setConsume(true);
                     saveTalkingContentingLog(talkingContent);
                     return ;
