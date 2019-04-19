@@ -57,6 +57,7 @@ public class WebSocketPushHandler extends TextWebSocketHandler {
         }
         logger.info("receive message from client ={}", content);
         TalkingContent talkingContent = JSONObject.parseObject(content, TalkingContent.class);
+        logger.info("talking content change " + JSONObject.toJSONString(talkingContent));
         sendMessageToUser(talkingContent, "websocket");
 
     }
@@ -81,11 +82,12 @@ public class WebSocketPushHandler extends TextWebSocketHandler {
         talkingContent.setConsume(false);
         talkingContent.setId(UUID.randomUUID().toString());
         String userId = talkingContent.getToId();
+        logger.info("=========================== userId:" + userId + "==============================");
 
         /**
          * 如果是转发并发现服务socket已关闭,日志保存
          */
-        if("Kafka".equals(type) && !webSocketSessionMap.containsKey(userId)) {
+        if("kafka".equals(type) && !webSocketSessionMap.containsKey(userId)) {
             saveTalkingContentingLog(talkingContent);
             return ;
         }
@@ -143,7 +145,8 @@ public class WebSocketPushHandler extends TextWebSocketHandler {
 
         WebSocketSession user = webSocketSessionMap.get(userId);
 
-        if (user.getAttributes().get("userId").equals(userId)) {
+        if (user != null && user.getAttributes().get("userId").equals(userId)) {
+            logger.info("============================== attributes" + user.getAttributes().get("userId") + "=========================");
             try {
                 user.close();
                 return true;

@@ -3,8 +3,8 @@ package com.tianjian.data.rest;
 import com.common.util.StringSortUtil;
 import com.tianjian.data.domain.model.entity.user.TalkingContent;
 import com.tianjian.data.domain.model.entity.user.TalkingContentJpaRepository;
-import com.tianjian.data.domain.model.entity.user.UserInfo;
-import com.tianjian.data.domain.model.entity.user.UserJpaRepository;
+import com.user.domain.entity.UserInfo;
+import com.user.domain.entity.UserJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,7 +39,6 @@ public class BaseRestService {
         userInfo.setEmail("ssd");
         userInfo.setName("haha");
         userInfo.setPassword("tj");
-        userInfo.setId(UUID.randomUUID().toString());
         userInfo.setSign("sign");
         userJpaRepository.save(userInfo);
         TalkingContent talkingContent = new TalkingContent();

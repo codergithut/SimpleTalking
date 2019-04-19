@@ -25,12 +25,12 @@ public class UserTopicInfo {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public boolean saveUserTopicInfo(String userId, String topic) {
+        redisTemplate.opsForValue().set(userId, topic);
         logger.info("save topic and user to redis userid={}, topic={}", userId, topic);
         if(redisTemplate.hasKey(userId)) {
             logger.warn("user has registed, userid = {}", userId);
             return false;
         }
-        redisTemplate.opsForValue().set(userId, topic);
         return true;
     }
 
