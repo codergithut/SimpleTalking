@@ -36,6 +36,11 @@ public class UserController {
         return userOpts.getAllUserInfo();
     }
 
+    @GetMapping("/getUserInfoById")
+    public UserInfo getUserById(@RequestParam(value="userId") Long userId) {
+        return userOpts.getUserInfoByUserId(userId).get();
+    }
+
     @DeleteMapping("/removeAll")
     public void removeUser() {
         userOpts.removeAllUser();
